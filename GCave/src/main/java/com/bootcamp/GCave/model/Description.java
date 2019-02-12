@@ -8,15 +8,15 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
+@Embeddable
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-@Table(name="descriptions")
-public class Description extends BaseEntity{
+
+public class Description {
 
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "items_id", nullable = false)
-    Item item;
+    /*@OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "items_id", nullable = false)*/
+    //Item item;
 
 
     String webDescription;

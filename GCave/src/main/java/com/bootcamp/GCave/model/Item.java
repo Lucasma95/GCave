@@ -10,13 +10,15 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@MappedSuperclass
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="items")
-public class Item extends  BaseNamedEntity {
+public abstract class Item extends  BaseNamedEntity {
+
+
 
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
@@ -27,8 +29,13 @@ public class Item extends  BaseNamedEntity {
     private Set<User> userss = new HashSet<>();
 
 
-    //@JsonIgnore
-    @OneToOne(fetch = FetchType.EAGER, cascade =  CascadeType.ALL, mappedBy = "item")
+
+
+    /*@AttributeOverrides(value = {
+            @AttributeOverride(name = "id", column = @Column(name = "id_description")),
+
+    })*/
+    @Embedded
     Description description;
 
 }

@@ -18,5 +18,5 @@ public class User extends BaseNamedEntity {
     @JoinTable(name = "UserItem",
             joinColumns = { @JoinColumn(name = "users_id") },
             inverseJoinColumns = { @JoinColumn(name = "items_id") })
-    private Set<Item> itemss = new HashSet<>();
+    private Set<Game> itemss = new HashSet<>();
 }
