@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(path="/users")
+@RequestMapping(path="/mods")
 public class ModController {
 
     @Autowired
