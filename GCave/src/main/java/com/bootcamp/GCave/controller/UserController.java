@@ -54,6 +54,7 @@ public class UserController {
 
         if(userService.validateUserExist(user.getId())) {
             userService.save(user);
+
             return "User Updated";
         }
         return "Do not exist any User with that id";

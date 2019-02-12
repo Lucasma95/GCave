@@ -1,10 +1,19 @@
 package com.bootcamp.GCave.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class User extends BaseNamedEntity {
 
@@ -18,5 +27,5 @@ public class User extends BaseNamedEntity {
     @JoinTable(name = "UserItem",
             joinColumns = { @JoinColumn(name = "users_id") },
             inverseJoinColumns = { @JoinColumn(name = "items_id") })
-    private Set<Game> itemss = new HashSet<>();
+    private Set<Item> itemss = new HashSet<>();
 }

@@ -9,10 +9,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 
-@Entity @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Table(name="games")
 public class Game extends  Item {
 
