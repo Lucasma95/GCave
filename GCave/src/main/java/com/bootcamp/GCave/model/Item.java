@@ -19,8 +19,9 @@ public abstract class Item extends  BaseNamedEntity {
 
 
 
-    @OneToMany(mappedBy="item",   fetch = FetchType.EAGER)
-    private List<Transaction> users;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "items")
+    private Set<User> users = new HashSet<>();
 
 
 

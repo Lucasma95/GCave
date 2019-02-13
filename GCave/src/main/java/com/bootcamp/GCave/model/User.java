@@ -18,9 +18,11 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends BaseNamedEntity {
 
-   // Set<Transaction> userItems ;
 
-    @OneToMany(mappedBy="user",   fetch = FetchType.EAGER)
-    private List<Transaction> items;
+   @ManyToMany(cascade = CascadeType.ALL)
+   @JoinTable(name = "UserItem",
+           joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+           inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"))
+   private Set<Item> items;
 
 }
