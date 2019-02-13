@@ -1,6 +1,7 @@
 package com.bootcamp.GCave.service;
 
 import com.bootcamp.GCave.model.Game;
+import com.bootcamp.GCave.model.Item;
 import com.bootcamp.GCave.repository.GameRepository;
 import com.bootcamp.GCave.serviceInterface.IGameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +16,22 @@ public class GameService implements IGameService {
     GameRepository gameRepository;
 
     @Override
-    public List<Game> findAll() {
+    public List<Item> findAll() {
 
-        List<Game> games = (List<Game>) gameRepository.findAll();
+        List<Item> games = (List<Item>) gameRepository.findAll();
 
         return games;
     }
 
     @Override
-    public Game findById(Long id) {
+    public Item findById(Long id) {
 
-        Game game = gameRepository.findById(id).orElse(null);
+        Item game = gameRepository.findById(id).orElse(null);
         return game;
     }
 
     @Override
-    public void save(Game game) {
+    public void save(Item game) {
 
         gameRepository.save(game);
 

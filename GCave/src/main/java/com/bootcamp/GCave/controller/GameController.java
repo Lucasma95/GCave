@@ -1,6 +1,7 @@
 package com.bootcamp.GCave.controller;
 
 import com.bootcamp.GCave.model.Game;
+import com.bootcamp.GCave.model.Item;
 import com.bootcamp.GCave.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +27,13 @@ public class GameController {
 
 
     @GetMapping("/all")
-    public @ResponseBody Iterable<Game> getAllGames(){
+    public @ResponseBody Iterable<Item> getAllGames(){
         return  gameService.findAll();
 
     }
 
     @GetMapping(path="/find")
-    public @ResponseBody Game GetGameById(@RequestParam Long id){
+    public @ResponseBody Item GetGameById(@RequestParam Long id){
 
         return gameService.findById(id);
 

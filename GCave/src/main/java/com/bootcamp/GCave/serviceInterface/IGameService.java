@@ -1,16 +1,17 @@
 package com.bootcamp.GCave.serviceInterface;
 
 import com.bootcamp.GCave.model.Game;
+import com.bootcamp.GCave.model.Item;
 
 import java.util.List;
 
 public interface IGameService {
 
-    List<Game> findAll();
+    List<Item> findAll();
 
-    Game findById(Long id);
+    Item findById(Long id);
 
-    void save(Game game);
+    void save(Item game);
 
     void deleteById(Long id);
 

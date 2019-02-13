@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,15 +18,9 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends BaseNamedEntity {
 
-   // Set<UserItem> userItems ;
+   // Set<Transaction> userItems ;
 
-    @ManyToMany(fetch = FetchType.EAGER,
-                cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-                })
-    @JoinTable(name = "UserItem",
-            joinColumns = { @JoinColumn(name = "users_id") },
-            inverseJoinColumns = { @JoinColumn(name = "items_id") })
-    private Set<Item> itemss = new HashSet<>();
+    @OneToMany(mappedBy="user",   fetch = FetchType.EAGER)
+    private List<Transaction> items;
+
 }
