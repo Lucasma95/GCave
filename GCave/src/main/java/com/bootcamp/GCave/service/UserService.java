@@ -1,19 +1,20 @@
 package com.bootcamp.GCave.service;
 
-import com.bootcamp.GCave.model.Game;
+
 import com.bootcamp.GCave.model.Item;
 import com.bootcamp.GCave.model.User;
+import com.bootcamp.GCave.payload.TransactionRequest;
 import com.bootcamp.GCave.payload.UserRequest;
 import com.bootcamp.GCave.repository.GameRepository;
-import com.bootcamp.GCave.repository.ItemRepository;
+import com.bootcamp.GCave.repository.ModRepository;
 import com.bootcamp.GCave.repository.UserRepository;
 import com.bootcamp.GCave.serviceInterface.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
+
 import java.util.List;
-import java.util.Set;
+
 
 @Service
 public class UserService implements IUserService {
@@ -23,6 +24,9 @@ public class UserService implements IUserService {
 
     @Autowired
     GameRepository gameRepository;
+
+    @Autowired
+    ModRepository modRepository;
 
     @Override
     public List<User> findAll() {
@@ -76,5 +80,27 @@ public class UserService implements IUserService {
         userRepository.save(user);
 
 
+    }
+
+    @Override
+    public void saveTransactionUserGame(TransactionRequest transactionRequest) {
+        User user = userRepository.findById(transactionRequest.getIdUser()).orElse(null);
+        Item item = gameRepository.findById(transactionRequest.getIdGame()).orElse(null);
+
+        user.getItems().add(item);
+        userRepository.save(user);
+
+
+
+
+    }
+
+    @Override
+    public void saveTransactionUserMod(TransactionRequest transactionRequest) {
+        User user = userRepository.findById(transactionRequest.getIdUser()).orElse(null);
+        Item item = modRepository.findById(transactionRequest.getIdMod()).orElse(null);
+
+        user.getItems().add(item);
+        userRepository.save(user);
     }
 }

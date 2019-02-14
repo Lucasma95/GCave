@@ -1,6 +1,7 @@
 package com.bootcamp.GCave.serviceInterface;
 
 import com.bootcamp.GCave.model.User;
+import com.bootcamp.GCave.payload.TransactionRequest;
 import com.bootcamp.GCave.payload.UserRequest;
 
 import java.util.List;
@@ -20,4 +21,8 @@ public interface IUserService {
     void saveUser(UserRequest userRequest);
 
     void updateUser(UserRequest userRequest);
+
+    void saveTransactionUserGame(TransactionRequest transactionRequest);
+
+    void saveTransactionUserMod(TransactionRequest transactionRequest);
 }

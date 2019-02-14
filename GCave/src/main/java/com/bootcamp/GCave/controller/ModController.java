@@ -1,14 +1,14 @@
 package com.bootcamp.GCave.controller;
 
 
-import com.bootcamp.GCave.model.Item;
+
 import com.bootcamp.GCave.model.Mod;
 import com.bootcamp.GCave.payload.ModRequest;
 import com.bootcamp.GCave.service.ModService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping(path="/mods")
