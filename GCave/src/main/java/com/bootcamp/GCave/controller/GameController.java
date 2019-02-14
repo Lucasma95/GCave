@@ -2,6 +2,7 @@ package com.bootcamp.GCave.controller;
 
 import com.bootcamp.GCave.model.Game;
 import com.bootcamp.GCave.model.Item;
+import com.bootcamp.GCave.payload.GameRequest;
 import com.bootcamp.GCave.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,18 +17,17 @@ public class GameController {
     GameService gameService;
 
     @PostMapping(path="/add")
-    public @ResponseBody
-    String addNewGame(@Valid @RequestBody Game game) {
+    public @ResponseBody String addNewGame(@RequestBody GameRequest gameRequest) {
 
 
-        gameService.save(game);
+        gameService.saveGame(gameRequest);
         return "Game Saved";
 
     }
 
 
     @GetMapping("/all")
-    public @ResponseBody Iterable<Item> getAllGames(){
+    public @ResponseBody Iterable<Game> getAllGames(){
         return  gameService.findAll();
 
     }

@@ -1,6 +1,12 @@
 package com.bootcamp.GCave.service;
 
+import com.bootcamp.GCave.model.Description;
+import com.bootcamp.GCave.model.Game;
+import com.bootcamp.GCave.model.Item;
 import com.bootcamp.GCave.model.Mod;
+import com.bootcamp.GCave.payload.ModRequest;
+import com.bootcamp.GCave.repository.GameRepository;
+import com.bootcamp.GCave.repository.ItemRepository;
 import com.bootcamp.GCave.repository.ModRepository;
 import com.bootcamp.GCave.serviceInterface.IModService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +18,24 @@ import java.util.List;
 public class ModService implements IModService {
 
     @Autowired
+    ItemRepository itemRepository;
+
+    @Autowired
+    GameRepository gameRepository;
+    @Autowired
     ModRepository modRepository;
 
 
     @Override
     public List<Mod> findAll() {
-        List<Mod> mods = (List<Mod>) modRepository.findAll();
+        List<Mod> mods =  modRepository.findAll();
 
         return mods;
     }
 
     @Override
     public Mod findById(Long id) {
-        Mod mod = modRepository.findById(id).orElse(null);
+        Mod mod =  modRepository.findById(id).orElse(null);
         return mod;
     }
 
@@ -44,5 +55,42 @@ public class ModService implements IModService {
     public boolean validateModExist(Long id) {
 
         return modRepository.existsById(id);
+    }
+
+    @Override
+    public void saveMod(ModRequest modRequest) {
+
+
+        Description description = new Description();
+        description.setMobileDescription(modRequest.getMobileDescription());
+        description.setWebDescription(modRequest.getWebDescription());
+
+        Mod mod = new Mod();
+        mod.setName(modRequest.getName());
+        mod.setGame(gameRepository.findById(modRequest.getGame()).orElse(null));
+        mod.setDescription(description);
+
+
+        modRepository.save(mod);
+
+
+    }
+
+    @Override
+    public void updateMod(ModRequest modRequest) {
+
+        Description description = new Description();
+        description.setMobileDescription(modRequest.getMobileDescription());
+        description.setWebDescription(modRequest.getWebDescription());
+
+        Mod mod = new Mod();
+        mod.setId(modRequest.getId());
+        mod.setName(modRequest.getName());
+        mod.setGame(gameRepository.findById(modRequest.getGame()).orElse(null));
+        mod.setDescription(description);
+
+
+        modRepository.save(mod);
+
     }
 }

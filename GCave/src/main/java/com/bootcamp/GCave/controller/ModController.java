@@ -1,7 +1,9 @@
 package com.bootcamp.GCave.controller;
 
 
+import com.bootcamp.GCave.model.Item;
 import com.bootcamp.GCave.model.Mod;
+import com.bootcamp.GCave.payload.ModRequest;
 import com.bootcamp.GCave.service.ModService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,10 @@ public class ModController {
 
     @PostMapping(path="/add")
     public @ResponseBody
-    String addNewMod(@Valid @RequestBody Mod mod) {
+    String addNewMod( @RequestBody ModRequest modRequest) {
 
 
-        modService.save(mod);
+        modService.saveMod(modRequest);
         return "Mod Saved";
 
 
@@ -51,10 +53,10 @@ public class ModController {
 
 
     @PostMapping(path="/update")
-    public @ResponseBody String UpdateMod(@RequestBody Mod mod ) {
+    public @ResponseBody String UpdateMod(@RequestBody ModRequest modRequest ) {
 
-        if(modService.validateModExist(mod.getId())) {
-            modService.save(mod);
+        if(modService.validateModExist(modRequest.getId())) {
+            modService.updateMod(modRequest);
             return "Mod Updated";
         }
         return "Do not exist any Mod with that id";

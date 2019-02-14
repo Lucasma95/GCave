@@ -1,6 +1,7 @@
 package com.bootcamp.GCave.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ public class Mod extends Item {
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "games_id",referencedColumnName="id")
+    @JoinColumn(name = "games_id")//,referencedColumnName="id"
     //@NotNull(message = "game attribute cannot be null")
     Game game;
 }

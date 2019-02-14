@@ -1,6 +1,7 @@
 package com.bootcamp.GCave.serviceInterface;
 
 import com.bootcamp.GCave.model.User;
+import com.bootcamp.GCave.payload.UserRequest;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface IUserService {
     boolean validateUserExist(Long id);
 
 
+    void saveUser(UserRequest userRequest);
 
+    void updateUser(UserRequest userRequest);
 }

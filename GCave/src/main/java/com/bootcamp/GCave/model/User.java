@@ -19,7 +19,7 @@ import java.util.Set;
 public class User extends BaseNamedEntity {
 
 
-   @ManyToMany(cascade = CascadeType.ALL)
+   @ManyToMany(cascade = CascadeType.ALL)//
    @JoinTable(name = "UserItem",
            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
            inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"))

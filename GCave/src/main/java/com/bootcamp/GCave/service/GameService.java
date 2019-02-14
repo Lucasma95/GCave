@@ -1,8 +1,11 @@
 package com.bootcamp.GCave.service;
 
+import com.bootcamp.GCave.model.Description;
 import com.bootcamp.GCave.model.Game;
 import com.bootcamp.GCave.model.Item;
+import com.bootcamp.GCave.payload.GameRequest;
 import com.bootcamp.GCave.repository.GameRepository;
+import com.bootcamp.GCave.repository.ItemRepository;
 import com.bootcamp.GCave.serviceInterface.IGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,23 +18,27 @@ public class GameService implements IGameService {
     @Autowired
     GameRepository gameRepository;
 
-    @Override
-    public List<Item> findAll() {
+    @Autowired
+    ItemRepository itemRepository;
 
-        List<Item> games = (List<Item>) gameRepository.findAll();
+
+    @Override
+    public List<Game> findAll() {
+
+        List<Game> games =  gameRepository.findAll();
 
         return games;
     }
 
     @Override
-    public Item findById(Long id) {
+    public Game findById(Long id) {
 
-        Item game = gameRepository.findById(id).orElse(null);
+        Game game = gameRepository.findById(id).orElse(null);
         return game;
     }
 
     @Override
-    public void save(Item game) {
+    public void save(Game game) {
 
         gameRepository.save(game);
 
@@ -48,4 +55,39 @@ public class GameService implements IGameService {
     public boolean validateGameExist(Long id) {
         return gameRepository.existsById(id);
     }
+
+    @Override
+    public void saveGame(GameRequest gameRequest) {
+
+
+            Description description = new Description();
+            description.setMobileDescription(gameRequest.getMobileDescription());
+            description.setWebDescription(gameRequest.getWebDescription());
+
+            Game game = new Game();
+            game.setName(gameRequest.getName());
+            game.setDescription(description);
+
+            gameRepository.save(game);
+
+
+    }
+
+    @Override
+    public void updateGame(GameRequest gameRequest) {
+
+        Description description = new Description();
+        description.setMobileDescription(gameRequest.getMobileDescription());
+        description.setWebDescription(gameRequest.getWebDescription());
+
+        Game game = new Game();
+        game.setId(gameRequest.getId());
+        game.setName(gameRequest.getName());
+        game.setDescription(description);
+
+        gameRepository.save(game);
+
+    }
+
+
 }
