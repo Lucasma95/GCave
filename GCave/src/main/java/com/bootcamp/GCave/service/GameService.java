@@ -39,7 +39,7 @@ public class GameService implements IGameService {
 
     @Override
     public void save(Game game) {
-
+        game.setActive(true);
         gameRepository.save(game);
 
     }
@@ -65,6 +65,7 @@ public class GameService implements IGameService {
             description.setWebDescription(gameRequest.getWebDescription());
 
             Game game = new Game();
+            game.setActive(true);
             game.setName(gameRequest.getName());
             game.setDescription(description);
 
@@ -81,12 +82,26 @@ public class GameService implements IGameService {
         description.setWebDescription(gameRequest.getWebDescription());
 
         Game game = new Game();
+        game.setActive(true);
         game.setId(gameRequest.getId());
         game.setName(gameRequest.getName());
         game.setDescription(description);
 
         gameRepository.save(game);
 
+    }
+
+    @Override
+    public void softDelete(Long id) {
+        Game game = gameRepository.findById(id).orElse(null);
+        game.setActive(false);
+        gameRepository.save(game);
+
+    }
+
+    @Override
+    public List<Game> findByName(String name) {
+       return gameRepository.findByName(name);
     }
 
 

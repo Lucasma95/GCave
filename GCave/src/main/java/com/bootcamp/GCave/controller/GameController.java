@@ -17,7 +17,7 @@ public class GameController {
     GameService gameService;
 
     @PostMapping(path="/add")
-    public @ResponseBody String addNewGame(@RequestBody GameRequest gameRequest) {
+    public @ResponseBody String addNewGame(@Valid @RequestBody GameRequest gameRequest) {
 
 
         gameService.saveGame(gameRequest);
@@ -33,16 +33,23 @@ public class GameController {
     }
 
     @GetMapping(path="/find")
-    public @ResponseBody Item GetGameById(@RequestParam Long id){
+    public @ResponseBody Item GetGameById(@RequestBody GameRequest gameRequest){
 
-        return gameService.findById(id);
+        return gameService.findById(gameRequest.getId());
+
+    }
+
+    @GetMapping(path="/findByName")
+    public @ResponseBody Iterable<Game> GetUserByName(@RequestBody GameRequest gameRequest){
+
+        return gameService.findByName(gameRequest.getName());
 
     }
 
     @DeleteMapping("/delete")
-    public @ResponseBody String DeleteGameById(@RequestParam Long id){
-        if(gameService.validateGameExist(id)){
-            gameService.deleteById(id);
+    public @ResponseBody String DeleteGameById(@RequestBody GameRequest gameRequest){
+        if(gameService.validateGameExist(gameRequest.getId())){
+            gameService.softDelete(gameRequest.getId());
             return "Game deleted";
         }
         return "Do not exist any Game with that id";

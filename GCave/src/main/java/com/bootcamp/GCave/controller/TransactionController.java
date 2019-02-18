@@ -21,7 +21,7 @@ public class TransactionController {
 
 
         userService.saveTransactionUserGame(transactionRequest);
-        return "Transaction confirm, game added";
+        return "Transaction confirm, idGame added";
 
     }
 

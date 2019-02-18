@@ -15,9 +15,9 @@ import javax.validation.constraints.NotNull;
 @Table(name="mods")
 public class Mod extends Item {
 
-    //@JsonIgnore
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "games_id")//,referencedColumnName="id"
-    //@NotNull(message = "game attribute cannot be null")
+    //@NotNull(message = "idGame attribute cannot be null")
     Game game;
 }

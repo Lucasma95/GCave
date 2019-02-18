@@ -1,8 +1,6 @@
 package com.bootcamp.GCave.service;
 
 import com.bootcamp.GCave.model.Description;
-import com.bootcamp.GCave.model.Game;
-import com.bootcamp.GCave.model.Item;
 import com.bootcamp.GCave.model.Mod;
 import com.bootcamp.GCave.payload.ModRequest;
 import com.bootcamp.GCave.repository.GameRepository;
@@ -41,6 +39,7 @@ public class ModService implements IModService {
 
     @Override
     public void save(Mod mod) {
+        mod.setActive(true);
         modRepository.save(mod);
 
     }
@@ -66,8 +65,9 @@ public class ModService implements IModService {
         description.setWebDescription(modRequest.getWebDescription());
 
         Mod mod = new Mod();
+        mod.setActive(true);
         mod.setName(modRequest.getName());
-        mod.setGame(gameRepository.findById(modRequest.getGame()).orElse(null));
+        mod.setGame(gameRepository.findById(modRequest.getIdGame()).orElse(null));
         mod.setDescription(description);
 
 
@@ -84,13 +84,26 @@ public class ModService implements IModService {
         description.setWebDescription(modRequest.getWebDescription());
 
         Mod mod = new Mod();
+        mod.setActive(true);
         mod.setId(modRequest.getId());
         mod.setName(modRequest.getName());
-        mod.setGame(gameRepository.findById(modRequest.getGame()).orElse(null));
+        mod.setGame(gameRepository.findById(modRequest.getIdGame()).orElse(null));
         mod.setDescription(description);
 
 
         modRepository.save(mod);
 
+    }
+
+    @Override
+    public void softDelete(Long id) {
+        Mod mod = modRepository.findById(id).orElse(null);
+        mod.setActive(false);
+        modRepository.save(mod);
+    }
+
+    @Override
+    public List<Mod> findByName(String name) {
+        return modRepository.findByName(name);
     }
 }

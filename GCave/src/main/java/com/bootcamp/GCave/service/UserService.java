@@ -1,6 +1,8 @@
 package com.bootcamp.GCave.service;
 
 
+import com.bootcamp.GCave.exception.AppException;
+import com.bootcamp.GCave.exception.Errors;
 import com.bootcamp.GCave.model.Item;
 import com.bootcamp.GCave.model.User;
 import com.bootcamp.GCave.payload.TransactionRequest;
@@ -10,6 +12,8 @@ import com.bootcamp.GCave.repository.ModRepository;
 import com.bootcamp.GCave.repository.UserRepository;
 import com.bootcamp.GCave.serviceInterface.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -43,6 +47,7 @@ public class UserService implements IUserService {
 
     @Override
     public void save(User user) {
+        user.setActive(true);
         userRepository.save(user);
 
     }
@@ -63,10 +68,11 @@ public class UserService implements IUserService {
     public void saveUser(UserRequest userRequest) {
 
 
-        //(gameRepository.findById(userRequest.getGame()));
+        //(gameRepository.findById(userRequest.getIdGame()));
 
         User user = new User();
         user.setName(userRequest.getName());
+        user.setActive(true);
         userRepository.save(user);
 
     }
@@ -77,6 +83,7 @@ public class UserService implements IUserService {
         User user = new User();
         user.setId(userRequest.getId());
         user.setName(userRequest.getName());
+        user.setActive(true);
         userRepository.save(user);
 
 
@@ -102,5 +109,28 @@ public class UserService implements IUserService {
 
         user.getItems().add(item);
         userRepository.save(user);
+    }
+
+    @Override
+    public ResponseEntity softDelete(Long id) {
+        if(userRepository.existsById(id)){
+        User user = userRepository.findById(id).orElse(null);
+        user.setActive(false);
+        userRepository.save(user);
+        return new ResponseEntity(HttpStatus.OK);
+        }
+        else{
+
+            throw new AppException(Errors.USER_NOT_FOUND);
+
+
+        }
+
+    }
+
+    @Override
+    public List<User> findByName(String name) {
+        return userRepository.findByName(name);
+
     }
 }

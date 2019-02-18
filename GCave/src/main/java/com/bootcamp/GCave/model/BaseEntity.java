@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,14 +19,18 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+
+public abstract class BaseEntity extends Auditable implements Serializable  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    OffsetDateTime creationDate;
+    @Where(clause = "active=1")
+    boolean active;
+
+    /*OffsetDateTime creationDate;
     OffsetDateTime editionDate;
-    OffsetDateTime deletionDate;
+    OffsetDateTime deletionDate;*/
 
 }

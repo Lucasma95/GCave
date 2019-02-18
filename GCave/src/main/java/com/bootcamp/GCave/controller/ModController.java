@@ -36,16 +36,22 @@ public class ModController {
     }
 
     @GetMapping(path="/find")
-    public @ResponseBody Mod GetModById(@RequestParam Long id){
+    public @ResponseBody Mod GetModById(@RequestBody ModRequest modRequest){
 
-        return modService.findById(id);
+        return modService.findById(modRequest.getId());
+
+    }
+    @GetMapping(path="/findByName")
+    public @ResponseBody Iterable<Mod> GetUserByName(@RequestBody ModRequest modRequest){
+
+        return modService.findByName(modRequest.getName());
 
     }
 
     @DeleteMapping("/delete")
-    public @ResponseBody String DeleteModById(@RequestParam Long id){
-        if(modService.validateModExist(id)){
-            modService.deleteById(id);
+    public @ResponseBody String DeleteModById(@RequestBody ModRequest modRequest){
+        if(modService.validateModExist(modRequest.getId())){
+            modService.softDelete(modRequest.getId());
             return "Mod deleted";
         }
         return "Do not exist any Mod with that id";

@@ -3,6 +3,7 @@ package com.bootcamp.GCave.serviceInterface;
 import com.bootcamp.GCave.model.User;
 import com.bootcamp.GCave.payload.TransactionRequest;
 import com.bootcamp.GCave.payload.UserRequest;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -25,4 +26,8 @@ public interface IUserService {
     void saveTransactionUserGame(TransactionRequest transactionRequest);
 
     void saveTransactionUserMod(TransactionRequest transactionRequest);
+
+    ResponseEntity softDelete(Long id);
+
+    List<User> findByName(String name);
 }

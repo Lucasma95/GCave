@@ -6,6 +6,8 @@ import com.bootcamp.GCave.model.User;
 import com.bootcamp.GCave.payload.UserRequest;
 import com.bootcamp.GCave.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,16 +20,7 @@ public class UserController {
     UserService userService;
 
 
-    @PostMapping(path="/addd")
-    public @ResponseBody
-    String adddNewUser(@RequestBody User user) {
 
-
-        userService.save(user);
-        return "User Saved";
-
-
-    }
 
     @PostMapping(path="/add")
     public @ResponseBody
@@ -46,25 +39,31 @@ public class UserController {
 
     }
 
-    @GetMapping(path="/find")
-    public @ResponseBody User GetUserById(@RequestParam Long id){
+    @GetMapping(path="/findByName")
+    public @ResponseBody Iterable<User> GetUserByName(@RequestBody UserRequest userRequest){
 
-            return userService.findById(id);
+        return userService.findByName(userRequest.getName());
+
+    }
+
+    @GetMapping(path="/find")
+    public @ResponseBody User GetUserById(@RequestBody UserRequest userRequest){
+
+            return userService.findById(userRequest.getId());
 
     }
 
     @DeleteMapping("/delete")
-    public @ResponseBody String DeleteUserById(@RequestParam Long id){
-        if(userService.validateUserExist(id)){
-            userService.deleteById(id);
-            return "User deleted";
-        }
-        return "Do not exist any User with that id";
+    public @ResponseBody ResponseEntity DeleteUserById(@RequestBody UserRequest userRequest){
+
+
+          return  userService.softDelete(userRequest.getId());
+
     }
 
 
     @PostMapping(path="/update")
-    public @ResponseBody String UpdateUser(@RequestBody UserRequest userRequest ) {
+    public @ResponseBody String UpdateUser(@RequestBody UserRequest userRequest) {
 
         if(userService.validateUserExist(userRequest.getId())) {
 
@@ -76,25 +75,5 @@ public class UserController {
 
 
     }
-    @GetMapping(path="/test")
-    public @ResponseBody String  teste(){
-        long a = 1;
-        long b = 2;
-        long c = 3;
-        User user = new User();
-        user.setName("Lucas");
-        userService.save(user);
-        user.setId(c);
-        Item game1 = new Game();
-        Item game2 = new Game();
-        game1.setId(a);
-        game1.setName("Tomb Raider");
-        game2.setId(b);
-        game2.setName("Uncharted");
-        user.getItems().add(game1);
-        user.getItems().add(game2);
-         userService.save(user);
-        return "user saved with games";
 
-    }
 }

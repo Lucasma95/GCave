@@ -22,4 +22,8 @@ public interface IGameService {
     void saveGame(GameRequest gameRequest);
 
     void updateGame(GameRequest gameRequest);
+
+    void softDelete(Long id);
+
+    List<Game> findByName(String name);
 }

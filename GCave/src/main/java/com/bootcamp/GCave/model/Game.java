@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name="games")
 public class Game extends  Item {
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "game",  fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "idGame",  fetch = FetchType.EAGER)
     Set<Mod> mods;
 }

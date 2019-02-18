@@ -22,4 +22,10 @@ public interface IModService {
     void saveMod(ModRequest modRequest);
 
     void updateMod(ModRequest modRequest);
+
+    void softDelete(Long id);
+
+
+
+    List<Mod> findByName(String name);
 }
