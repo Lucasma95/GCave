@@ -39,7 +39,7 @@ public class ModController {
     @GetMapping(path="/find")
     public @ResponseBody Mod GetModById(@Valid @RequestBody ModRequest modRequest){
 
-        return modService.findById(modRequest.getId());
+        return modService.findById(modRequest);
 
     }
     @GetMapping(path="/findByName")
@@ -51,22 +51,21 @@ public class ModController {
 
     @DeleteMapping("/delete")
     public @ResponseBody String DeleteModById(@Valid @RequestBody ModRequest modRequest){
-        if(modService.validateModExist(modRequest.getId())){
-            modService.softDelete(modRequest.getId());
+
+            modService.softDelete(modRequest);
             return "Mod deleted";
-        }
-        return "Do not exist any Mod with that id";
+
+
     }
 
 
     @PostMapping(path="/update")
     public @ResponseBody String UpdateMod(@Valid @RequestBody ModRequest modRequest ) {
 
-        if(modService.validateModExist(modRequest.getId())) {
+
             modService.updateMod(modRequest);
             return "Mod Updated";
-        }
-        return "Do not exist any Mod with that id";
+
 
     }
 

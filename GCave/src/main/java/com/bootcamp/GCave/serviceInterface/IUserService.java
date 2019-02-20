@@ -10,7 +10,7 @@ import java.util.List;
 public interface IUserService {
     List<User> findAll();
 
-    User findById(Long id);
+    User findById(UserRequest userRequest);
 
     void save(User user);
 

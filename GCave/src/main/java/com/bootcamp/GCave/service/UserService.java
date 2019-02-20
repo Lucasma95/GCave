@@ -38,14 +38,23 @@ public class UserService implements IUserService {
     @Override
     public List<User> findAll() {
         List<User> users = (List<User>) userRepository.findAll();
-
         return users;
     }
 
     @Override
-    public User findById(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        return user;
+    public User findById(UserRequest userRequest) {
+        if(userRepository.existsById(userRequest.getId())){
+
+            User user = userRepository.findById(userRequest.getId()).orElse(null);
+            return user;
+        }
+        else{
+
+            throw new ResourceException(HttpStatus.NOT_FOUND, "Problem looking for the user, "+Errors.USER_NOT_FOUND);
+
+
+        }
+
     }
 
     @Override
@@ -118,7 +127,7 @@ public class UserService implements IUserService {
 
 
     }
-    //Item item = modRepository.findById(transactionRequest.getIdMod()).orElse(null);
+
     @Override
     public void saveTransactionUserMod(TransactionRequest transactionRequest) {
         if (userRepository.existsById(transactionRequest.getIdUser())) {

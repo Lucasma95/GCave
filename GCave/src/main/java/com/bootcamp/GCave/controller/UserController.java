@@ -46,7 +46,7 @@ public class UserController {
     @GetMapping(path="/find")
     public @ResponseBody User GetUserById(@Valid @RequestBody UserRequest userRequest){
 
-            return userService.findById(userRequest.getId());
+            return userService.findById(userRequest);
 
     }
 

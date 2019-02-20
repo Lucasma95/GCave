@@ -1,5 +1,7 @@
 package com.bootcamp.GCave.service;
 
+import com.bootcamp.GCave.exception.AppException;
+import com.bootcamp.GCave.exception.Errors;
 import com.bootcamp.GCave.model.Description;
 import com.bootcamp.GCave.model.Mod;
 import com.bootcamp.GCave.payload.ModRequest;
@@ -15,8 +17,7 @@ import java.util.List;
 @Service
 public class ModService implements IModService {
 
-    @Autowired
-    ItemRepository itemRepository;
+
 
     @Autowired
     GameRepository gameRepository;
@@ -32,9 +33,18 @@ public class ModService implements IModService {
     }
 
     @Override
-    public Mod findById(Long id) {
-        Mod mod =  modRepository.findById(id).orElse(null);
-        return mod;
+    public Mod findById(ModRequest modRequest) {
+        if (modRepository.existsById(modRequest.getId())) {
+
+            Mod mod =  modRepository.findById(modRequest.getId()).orElse(null);
+            return mod;
+
+        }
+        else{
+            throw new AppException( "Problem looking for the mod, "+ Errors.MOD_NOT_FOUND);
+
+        }
+
     }
 
     @Override
@@ -60,46 +70,79 @@ public class ModService implements IModService {
     public void saveMod(ModRequest modRequest) {
 
 
-        Description description = new Description();
-        description.setMobileDescription(modRequest.getMobileDescription());
-        description.setWebDescription(modRequest.getWebDescription());
+        if (gameRepository.existsById(modRequest.getIdGame())) {
 
-        Mod mod = new Mod();
-        mod.setActive(true);
-        mod.setName(modRequest.getName());
-        mod.setGame(gameRepository.findById(modRequest.getIdGame()).orElse(null));
-        mod.setDescription(description);
+            Description description = new Description();
+            description.setMobileDescription(modRequest.getMobileDescription());
+            description.setWebDescription(modRequest.getWebDescription());
+
+            Mod mod = new Mod();
+            mod.setActive(true);
+            mod.setName(modRequest.getName());
+            mod.setGame(gameRepository.findById(modRequest.getIdGame()).orElse(null));
+            mod.setDescription(description);
 
 
-        modRepository.save(mod);
+            modRepository.save(mod);
+
+        }
+        else{
+            throw new AppException( "Problem saving the mod, "+ Errors.GAME_NOT_FOUND);
+
+        }
+
+
 
 
     }
 
     @Override
     public void updateMod(ModRequest modRequest) {
+        if (modRepository.existsById(modRequest.getId())) {
 
-        Description description = new Description();
-        description.setMobileDescription(modRequest.getMobileDescription());
-        description.setWebDescription(modRequest.getWebDescription());
+            if( gameRepository.existsById(modRequest.getIdGame())) {
 
-        Mod mod = new Mod();
-        mod.setActive(true);
-        mod.setId(modRequest.getId());
-        mod.setName(modRequest.getName());
-        mod.setGame(gameRepository.findById(modRequest.getIdGame()).orElse(null));
-        mod.setDescription(description);
+                Description description = new Description();
+                description.setMobileDescription(modRequest.getMobileDescription());
+                description.setWebDescription(modRequest.getWebDescription());
+
+                Mod mod = new Mod();
+                mod.setActive(true);
+                mod.setId(modRequest.getId());
+                mod.setName(modRequest.getName());
+                mod.setGame(gameRepository.findById(modRequest.getIdGame()).orElse(null));
+                mod.setDescription(description);
 
 
-        modRepository.save(mod);
+                modRepository.save(mod);
+
+            }
+            else{
+                throw new AppException( "Problem with the update, "+ Errors.GAME_NOT_FOUND);
+            }
+        }
+        else{
+            throw new AppException( "Problem with the update, "+Errors.MOD_NOT_FOUND);
+
+        }
+
 
     }
 
     @Override
-    public void softDelete(Long id) {
-        Mod mod = modRepository.findById(id).orElse(null);
-        mod.setActive(false);
-        modRepository.save(mod);
+    public void softDelete(ModRequest modRequest) {
+
+        if (modRepository.existsById(modRequest.getId())) {
+
+            Mod mod = modRepository.findById(modRequest.getId()).orElse(null);
+            mod.setActive(false);
+            modRepository.save(mod);
+
+        }
+        else{
+            throw new AppException( "Problem with the softDelete, "+ Errors.MOD_NOT_FOUND);
+
+        }
     }
 
     @Override

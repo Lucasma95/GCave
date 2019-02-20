@@ -35,7 +35,7 @@ public class GameController {
     @GetMapping(path="/find")
     public @ResponseBody Item GetGameById(@Valid @RequestBody GameRequest gameRequest){
 
-        return gameService.findById(gameRequest.getId());
+        return gameService.findById(gameRequest);
 
     }
 
@@ -49,7 +49,7 @@ public class GameController {
     @DeleteMapping("/delete")
     public @ResponseBody String DeleteGameById(@Valid @RequestBody GameRequest gameRequest){
 
-            gameService.softDelete(gameRequest.getId());
+            gameService.softDelete(gameRequest);
             return "Game deleted";
 
     }

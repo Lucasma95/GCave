@@ -10,7 +10,7 @@ public interface IModService {
 
     List<Mod> findAll();
 
-    Mod findById(Long id);
+    Mod findById(ModRequest modRequest);
 
     void save(Mod mod);
 
@@ -23,7 +23,7 @@ public interface IModService {
 
     void updateMod(ModRequest modRequest);
 
-    void softDelete(Long id);
+    void softDelete(ModRequest modRequest);
 
 
 

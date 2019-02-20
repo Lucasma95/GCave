@@ -20,9 +20,6 @@ public class GameService implements IGameService {
     @Autowired
     GameRepository gameRepository;
 
-    @Autowired
-    ItemRepository itemRepository;
-
 
     @Override
     public List<Game> findAll() {
@@ -33,10 +30,20 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public Game findById(Long id) {
+    public Game findById(GameRequest gameRequest) {
 
-        Game game = gameRepository.findById(id).orElse(null);
-        return game;
+        if (gameRepository.existsById(gameRequest.getId())) {
+
+            Game game = gameRepository.findById(gameRequest.getId()).orElse(null);
+            return game;
+
+        }
+        else{
+            throw new AppException( "Problem looking for the game, "+ Errors.GAME_NOT_FOUND);
+
+        }
+
+
     }
 
     @Override
@@ -99,10 +106,19 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public void softDelete(Long id) {
-        Game game = gameRepository.findById(id).orElse(null);
-        game.setActive(false);
-        gameRepository.save(game);
+    public void softDelete(GameRequest gameRequest) {
+
+        if (gameRepository.existsById(gameRequest.getId())) {
+
+            Game game = gameRepository.findById(gameRequest.getId()).orElse(null);
+            game.setActive(false);
+            gameRepository.save(game);
+
+        }
+        else{
+            throw new AppException( "Problem with the softDelete, "+ Errors.GAME_NOT_FOUND);
+
+        }
 
     }
 

@@ -10,7 +10,7 @@ public interface IGameService {
 
     List<Game> findAll();
 
-    Game findById(Long id);
+    Game findById(GameRequest gameRequest);
 
     void save(Game game);
 
@@ -23,7 +23,7 @@ public interface IGameService {
 
     void updateGame(GameRequest gameRequest);
 
-    void softDelete(Long id);
+    void softDelete(GameRequest gameRequest);
 
     List<Game> findByName(String name);
 }

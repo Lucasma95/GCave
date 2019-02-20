@@ -10,9 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.Positive;
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+
 
 @Getter
 @Setter
@@ -29,8 +28,6 @@ public abstract class BaseEntity extends Auditable implements Serializable  {
     @Where(clause = "active=1")
     boolean active;
 
-    /*OffsetDateTime creationDate;
-    OffsetDateTime editionDate;
-    OffsetDateTime deletionDate;*/
+
 
 }
