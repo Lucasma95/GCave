@@ -134,7 +134,7 @@ public class UserService implements IUserService {
 
             if( modRepository.existsById(transactionRequest.getIdMod())) {
                 User user = userRepository.findById(transactionRequest.getIdUser()).orElse(null);
-                Item item = modRepository.findById(transactionRequest.getIdGame()).orElse(null);
+                Item item = modRepository.findById(transactionRequest.getIdMod()).orElse(null);
                 user.getItems().add(item);
                 userRepository.save(user);
             }
