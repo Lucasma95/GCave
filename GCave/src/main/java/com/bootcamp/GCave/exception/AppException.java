@@ -15,6 +15,7 @@ public class AppException  extends RuntimeException implements Serializable {
     public AppException(String message){
         super(message);
 
+
     }
 
 

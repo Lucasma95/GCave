@@ -1,13 +1,11 @@
 package com.bootcamp.GCave.controller;
 
-import com.bootcamp.GCave.model.Game;
-import com.bootcamp.GCave.model.Item;
+
 import com.bootcamp.GCave.model.User;
 import com.bootcamp.GCave.payload.UserRequest;
 import com.bootcamp.GCave.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,8 +21,7 @@ public class UserController {
 
 
     @PostMapping(path="/add")
-    public @ResponseBody
-    String addNewUser(@RequestBody UserRequest userRequest) {
+    public @ResponseBody String addNewUser(@Valid @RequestBody UserRequest userRequest) {
 
 
         userService.saveUser(userRequest);
@@ -40,39 +37,36 @@ public class UserController {
     }
 
     @GetMapping(path="/findByName")
-    public @ResponseBody Iterable<User> GetUserByName(@RequestBody UserRequest userRequest){
+    public @ResponseBody Iterable<User> GetUserByName(@Valid @RequestBody UserRequest userRequest){
 
         return userService.findByName(userRequest.getName());
 
     }
 
     @GetMapping(path="/find")
-    public @ResponseBody User GetUserById(@RequestBody UserRequest userRequest){
+    public @ResponseBody User GetUserById(@Valid @RequestBody UserRequest userRequest){
 
             return userService.findById(userRequest.getId());
 
     }
 
     @DeleteMapping("/delete")
-    public @ResponseBody ResponseEntity DeleteUserById(@RequestBody UserRequest userRequest){
+    public @ResponseBody String DeleteUserById(@Valid @RequestBody UserRequest userRequest){
 
 
-          return  userService.softDelete(userRequest.getId());
+            userService.softDelete(userRequest.getId());
+            return "User deleted";
 
     }
 
 
     @PostMapping(path="/update")
-    public @ResponseBody String UpdateUser(@RequestBody UserRequest userRequest) {
+    public @ResponseBody String UpdateUser(@Valid @RequestBody UserRequest userRequest) {
 
-        if(userService.validateUserExist(userRequest.getId())) {
 
             userService.updateUser(userRequest);
 
             return "User Updated";
-        }
-        return "Do not exist any User with that id";
-
 
     }
 

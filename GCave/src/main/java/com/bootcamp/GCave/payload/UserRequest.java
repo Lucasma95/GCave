@@ -12,10 +12,10 @@ import javax.validation.constraints.Size;
 public class UserRequest {
 
 
-    @PositiveOrZero(message = "id must be a number positive")
+    @PositiveOrZero(message = "User's id must be a number positive")
     private long id;
 
-    @Size(min = 5, max = 100, message = "name must be between 5 and 100 characters")
+    @Size(min = 5, max = 100, message = "User's name must be between 5 and 100 characters")
     private String name;
 
 

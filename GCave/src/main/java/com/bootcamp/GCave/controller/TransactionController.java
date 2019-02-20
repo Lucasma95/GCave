@@ -7,6 +7,8 @@ import com.bootcamp.GCave.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path="/transactions")
 public class TransactionController {
@@ -17,16 +19,16 @@ public class TransactionController {
 
 
     @PostMapping(path="/addUserGame")
-    public @ResponseBody String addNewTransactionUserGame(@RequestBody TransactionRequest transactionRequest) {
+    public @ResponseBody String addNewTransactionUserGame(@Valid @RequestBody TransactionRequest transactionRequest) {
 
 
         userService.saveTransactionUserGame(transactionRequest);
-        return "Transaction confirm, idGame added";
+        return "Transaction confirm, Game added";
 
     }
 
     @PostMapping(path="/addUserMod")
-    public @ResponseBody String addNewTransactionUserMod(@RequestBody TransactionRequest transactionRequest) {
+    public @ResponseBody String addNewTransactionUserMod(@Valid @RequestBody TransactionRequest transactionRequest) {
 
 
         userService.saveTransactionUserMod(transactionRequest);

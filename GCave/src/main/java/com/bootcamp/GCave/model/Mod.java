@@ -17,7 +17,6 @@ public class Mod extends Item {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "games_id")//,referencedColumnName="id"
-    //@NotNull(message = "idGame attribute cannot be null")
+    @JoinColumn(name = "games_id")
     Game game;
 }

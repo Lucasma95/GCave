@@ -8,6 +8,7 @@ import com.bootcamp.GCave.service.ModService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
 
 @RestController
@@ -20,7 +21,7 @@ public class ModController {
 
     @PostMapping(path="/add")
     public @ResponseBody
-    String addNewMod( @RequestBody ModRequest modRequest) {
+    String addNewMod(@Valid @RequestBody ModRequest modRequest) {
 
 
         modService.saveMod(modRequest);
@@ -36,20 +37,20 @@ public class ModController {
     }
 
     @GetMapping(path="/find")
-    public @ResponseBody Mod GetModById(@RequestBody ModRequest modRequest){
+    public @ResponseBody Mod GetModById(@Valid @RequestBody ModRequest modRequest){
 
         return modService.findById(modRequest.getId());
 
     }
     @GetMapping(path="/findByName")
-    public @ResponseBody Iterable<Mod> GetUserByName(@RequestBody ModRequest modRequest){
+    public @ResponseBody Iterable<Mod> GetUserByName(@Valid @RequestBody ModRequest modRequest){
 
         return modService.findByName(modRequest.getName());
 
     }
 
     @DeleteMapping("/delete")
-    public @ResponseBody String DeleteModById(@RequestBody ModRequest modRequest){
+    public @ResponseBody String DeleteModById(@Valid @RequestBody ModRequest modRequest){
         if(modService.validateModExist(modRequest.getId())){
             modService.softDelete(modRequest.getId());
             return "Mod deleted";
@@ -59,7 +60,7 @@ public class ModController {
 
 
     @PostMapping(path="/update")
-    public @ResponseBody String UpdateMod(@RequestBody ModRequest modRequest ) {
+    public @ResponseBody String UpdateMod(@Valid @RequestBody ModRequest modRequest ) {
 
         if(modService.validateModExist(modRequest.getId())) {
             modService.updateMod(modRequest);

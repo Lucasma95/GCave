@@ -1,5 +1,7 @@
 package com.bootcamp.GCave.service;
 
+import com.bootcamp.GCave.exception.AppException;
+import com.bootcamp.GCave.exception.Errors;
 import com.bootcamp.GCave.model.Description;
 import com.bootcamp.GCave.model.Game;
 import com.bootcamp.GCave.model.Item;
@@ -76,18 +78,23 @@ public class GameService implements IGameService {
 
     @Override
     public void updateGame(GameRequest gameRequest) {
+        if (gameRepository.existsById(gameRequest.getId())) {
 
-        Description description = new Description();
-        description.setMobileDescription(gameRequest.getMobileDescription());
-        description.setWebDescription(gameRequest.getWebDescription());
+            Description description = new Description();
+            description.setMobileDescription(gameRequest.getMobileDescription());
+            description.setWebDescription(gameRequest.getWebDescription());
 
-        Game game = new Game();
-        game.setActive(true);
-        game.setId(gameRequest.getId());
-        game.setName(gameRequest.getName());
-        game.setDescription(description);
+            Game game = gameRepository.findById(gameRequest.getId()).orElse(null);
+            game.setActive(true);
+            game.setName(gameRequest.getName());
+            game.setDescription(description);
+            gameRepository.save(game);
+        }
+        else{
+            throw new AppException( "Problem with the update, "+ Errors.GAME_NOT_FOUND);
 
-        gameRepository.save(game);
+        }
+
 
     }
 

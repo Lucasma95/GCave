@@ -16,6 +16,6 @@ import java.util.Set;
 public class Game extends  Item {
 
 
-    @OneToMany(mappedBy = "idGame",  fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "game",  fetch = FetchType.EAGER)
     Set<Mod> mods;
 }

@@ -27,7 +27,7 @@ public interface IUserService {
 
     void saveTransactionUserMod(TransactionRequest transactionRequest);
 
-    ResponseEntity softDelete(Long id);
+    void softDelete(Long id);
 
     List<User> findByName(String name);
 }

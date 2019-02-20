@@ -33,36 +33,34 @@ public class GameController {
     }
 
     @GetMapping(path="/find")
-    public @ResponseBody Item GetGameById(@RequestBody GameRequest gameRequest){
+    public @ResponseBody Item GetGameById(@Valid @RequestBody GameRequest gameRequest){
 
         return gameService.findById(gameRequest.getId());
 
     }
 
     @GetMapping(path="/findByName")
-    public @ResponseBody Iterable<Game> GetUserByName(@RequestBody GameRequest gameRequest){
+    public @ResponseBody Iterable<Game> GetUserByName(@Valid @RequestBody GameRequest gameRequest){
 
         return gameService.findByName(gameRequest.getName());
 
     }
 
     @DeleteMapping("/delete")
-    public @ResponseBody String DeleteGameById(@RequestBody GameRequest gameRequest){
-        if(gameService.validateGameExist(gameRequest.getId())){
+    public @ResponseBody String DeleteGameById(@Valid @RequestBody GameRequest gameRequest){
+
             gameService.softDelete(gameRequest.getId());
             return "Game deleted";
-        }
-        return "Do not exist any Game with that id";
+
     }
 
 
     @PostMapping(path="/update")
-    public @ResponseBody String UpdateGame(@RequestBody Game game ) {
-        if(gameService.validateGameExist(game.getId())) {
-            gameService.save(game);
+    public @ResponseBody String UpdateGame(@Valid @RequestBody GameRequest gameRequest ) {
+
+            gameService.updateGame(gameRequest);
             return "Game Updated";
-        }
-        return "Do not exist any Game with that id";
+
 
     }
 }
